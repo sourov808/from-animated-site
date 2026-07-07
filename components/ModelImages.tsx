@@ -1,20 +1,10 @@
 import React from "react";
 
-interface ModelImagesProps {
-  showSecondImage: boolean;
-}
-
-export default function ModelImages({ showSecondImage }: ModelImagesProps) {
+export default function ModelImages() {
   return (
-    <>
+    <div className="absolute inset-0 z-12 pointer-events-none select-none">
       {/* Model Image Set 1 (Initial state) */}
-      <div 
-        className={`absolute inset-0 flex justify-center items-end pointer-events-none z-12 select-none transition-all duration-[1100ms] cubic-bezier(0.16, 1, 0.3, 1) ${
-          !showSecondImage 
-            ? "opacity-100 scale-100 translate-y-0" 
-            : "opacity-0 scale-95 -translate-y-12 pointer-events-none"
-        }`}
-      >
+      <div className="hero-image-set-1 absolute inset-0 flex justify-center items-end opacity-100">
         <div className="relative w-full h-full flex items-end justify-center">
           {/* Left Color Image (Clipped to the left half) */}
           <div className="absolute inset-y-0 left-0 right-1/2 overflow-hidden flex items-end justify-end">
@@ -43,14 +33,8 @@ export default function ModelImages({ showSecondImage }: ModelImagesProps) {
       </div>
 
       {/* Model Image Set 2 (Scrolled state) */}
-      <div 
-        className={`absolute inset-0 flex justify-center items-end pointer-events-none z-12 select-none transition-all duration-[1100ms] cubic-bezier(0.16, 1, 0.3, 1) ${
-          showSecondImage 
-            ? "opacity-100 scale-100 translate-y-0" 
-            : "opacity-0 scale-95 translate-y-12 pointer-events-none"
-        }`}
-      >
-        <div className="relative w-full h-full flex items-end justify-center">
+      <div className="hero-image-set-2 absolute inset-0 flex justify-center items-end opacity-0">
+        <div className="hero-model-container relative w-full h-full flex items-end justify-center origin-bottom">
           {/* Left Image (Clipped to left half) */}
           <div className="absolute inset-y-0 left-0 right-1/2 overflow-hidden flex items-end justify-end">
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[92vh] w-auto aspect-[3/4] flex items-end justify-center">
@@ -76,6 +60,6 @@ export default function ModelImages({ showSecondImage }: ModelImagesProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

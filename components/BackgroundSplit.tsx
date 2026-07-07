@@ -8,13 +8,13 @@ export default function BackgroundSplit() {
         {/* Left background: Solid cream */}
         <div className="w-1/2 h-full bg-[#FAF7F2]" />
         {/* Right background: Gray with grain texture */}
-        <div className="w-1/2 h-full bg-[#C5C2BB] relative overflow-hidden">
+        <div className="hero-right-bg w-1/2 h-full bg-[#C5C2BB] relative overflow-hidden">
           <div className="absolute inset-0 grain-overlay" />
         </div>
       </div>
 
       {/* Torn paper edge divider overlay */}
-      <div className="absolute top-0 bottom-0 left-1/2 -translate-x-[50%] w-24 z-10 pointer-events-none overflow-hidden select-none">
+      <div className="hero-divider absolute top-0 bottom-0 left-1/2 -translate-x-[50%] w-24 z-10 pointer-events-none overflow-hidden select-none">
         <svg viewBox="0 0 100 1000" preserveAspectRatio="none" className="w-full h-full filter drop-shadow-[5px_0_12px_rgba(0,0,0,0.15)]">
           <path
             d="M 50 0
