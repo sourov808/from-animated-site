@@ -1,65 +1,61 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Header from "@/components/Header";
+import BackgroundSplit from "@/components/BackgroundSplit";
+import BackgroundTypography from "@/components/BackgroundTypography";
+import ModelImages from "@/components/ModelImages";
+import ForegroundTypography from "@/components/ForegroundTypography";
 
 export default function Home() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const showSecondImage = scrollY > 120;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+    <div className="relative min-h-[200vh] bg-[#FAF7F2] font-sans text-[#0A0A0A] selection:bg-[#0A0A0A] selection:text-[#FAF7F2]">
+      {/* Navbar & Mobile Overlay Drawer */}
+      <Header />
+
+      {/* Main Hero Container */}
+      <main className="fixed inset-0 w-full h-screen overflow-hidden">
+        
+        {/* Split Color Backgrounds */}
+        <BackgroundSplit />
+
+        {/* Big Typography behind the models */}
+        <BackgroundTypography showSecondImage={showSecondImage} />
+
+        {/* Model Images */}
+        <ModelImages showSecondImage={showSecondImage} />
+
+        {/* Red & Outlined Typography in front of the models */}
+        <ForegroundTypography showSecondImage={showSecondImage} />
+
+        {/* Bottom Bracket Action Link */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-center">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#collection"
+            className="font-anton text-xs md:text-sm uppercase tracking-[0.2em] text-black hover:opacity-75 transition-opacity pointer-events-auto"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            [ SEE COLLECTION ]
           </a>
         </div>
+
       </main>
+      
+      {/* Scroll indicator hint */}
+      <div className="fixed bottom-8 right-8 z-30 pointer-events-none font-anton text-[10px] tracking-[0.2em] text-black/30 hidden md:block">
+        SCROLL DOWN
+      </div>
     </div>
   );
 }
