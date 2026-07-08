@@ -53,7 +53,7 @@ export default function StatsSection() {
 
   return (
     <section
-      className="stats-section-el absolute inset-0 w-full h-screen z-30 pointer-events-none opacity-0 flex items-center overflow-hidden"
+      className="stats-section-el absolute inset-0 w-full h-screen z-35 pointer-events-none opacity-0 flex items-center overflow-hidden"
       style={{
         willChange: "opacity, background-color",
         backgroundColor: "#F8F6F2",

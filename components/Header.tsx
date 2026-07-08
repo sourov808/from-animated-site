@@ -42,7 +42,7 @@ export default function Header() {
           </div>
 
           {/* Center Logo: Site name FROM */}
-          <a href="#" className="nav-el font-anton text-4xl md:text-[2.75rem] font-normal tracking-[0.05em] text-[#0A0A0A] select-none text-center transform -translate-y-[2px] z-50 relative">
+          <a href="#" className="nav-el header-logo font-anton text-4xl md:text-[2.75rem] font-normal tracking-[0.05em] text-[#0A0A0A] select-none text-center transform -translate-y-[2px] z-50 relative">
             FROM
           </a>
 
