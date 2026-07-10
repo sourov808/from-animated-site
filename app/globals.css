@@ -51,13 +51,6 @@ body {
   top: -10% !important;
 }
 
-/* Initial states for Editorial Break transition bands to prevent layout flash before GSAP loads */
-.eb-top-band {
-  transform: translateY(-100%);
-}
-.eb-bottom-band {
-  transform: translateY(100%);
-}
 .eb-center-band {
   clip-path: inset(50% 0% 50% 0%);
 }

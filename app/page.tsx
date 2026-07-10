@@ -15,13 +15,21 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ctx: any;
+    let active = true;
+
     // Dynamic import to support Next.js SSR safely
     const initGsap = async () => {
       const { gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       gsap.registerPlugin(ScrollTrigger);
 
-      const ctx = gsap.context(() => {
+      // Disable target warnings to avoid spamming console
+      gsap.config({ nullTargetWarn: false });
+
+      if (!active) return;
+
+      ctx = gsap.context(() => {
         // Master scroll timeline
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -97,29 +105,50 @@ export default function Home() {
             0.3,
           )
           .set(".gallery-section-el", { display: "none", opacity: 0 }, 0.3)
+          .set(".gallery-bg-container", { scale: 1.15, rotation: -2 }, 0.3)
           .set(
             ".gallery-supported-card.corner-tl",
-            { x: -60, y: -40, opacity: 0 },
+            { x: -140, y: -100, scale: 0.8, rotation: -15, opacity: 0 },
             0.3,
           )
           .set(
             ".gallery-supported-card.corner-bl",
-            { x: -60, y: 40, opacity: 0 },
+            { x: -140, y: 100, scale: 0.8, rotation: 15, opacity: 0 },
             0.3,
           )
           .set(
             ".gallery-supported-card.corner-tr",
-            { x: 60, y: -40, opacity: 0 },
+            { x: 140, y: -100, scale: 0.8, rotation: 15, opacity: 0 },
             0.3,
           )
           .set(
             ".gallery-supported-card.corner-br",
-            { x: 60, y: 40, opacity: 0 },
+            { x: 140, y: 100, scale: 0.8, rotation: -15, opacity: 0 },
             0.3,
           )
           .set(
-            ".stack-card-0, .stack-card-1, .stack-card-2, .stack-card-3, .stack-card-4",
-            { opacity: 0 },
+            ".stack-card-0",
+            { scale: 0.85, rotation: -12, x: -30, y: -20, opacity: 0 },
+            0.3,
+          )
+          .set(
+            ".stack-card-1",
+            { scale: 0.85, rotation: 8, x: 25, y: -15, opacity: 0 },
+            0.3,
+          )
+          .set(
+            ".stack-card-2",
+            { scale: 0.85, rotation: -6, x: -15, y: 10, opacity: 0 },
+            0.3,
+          )
+          .set(
+            ".stack-card-3",
+            { scale: 0.85, rotation: 6, x: 20, y: 15, opacity: 0 },
+            0.3,
+          )
+          .set(
+            ".stack-card-4",
+            { scale: 0.85, rotation: -2, x: 0, y: 0, opacity: 0 },
             0.3,
           )
           .set(".text-section-el", { display: "none", opacity: 0 }, 0.3)
@@ -472,7 +501,7 @@ export default function Home() {
             ".eb-bottom-band",
             { yPercent: 100 },
             { yPercent: 0, duration: 0.24, ease: "power2.out" },
-            2.49,
+            2.33,
           );
 
         // Background Typography horizontal drift (from 2.14 to 3.18)
@@ -483,24 +512,24 @@ export default function Home() {
           2.14,
         );
 
-        // Entrance slide-up and fade-in by line/item for Editorial Break
+        // Entrance slide-up and fade-in for boundary texts and poetry lines
         tl.fromTo(
-          ".eb-label",
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
-          2.16,
+          ".eb-reveal-row span",
+          { yPercent: 105 },
+          { yPercent: 0, duration: 0.5, ease: "power3.out", stagger: 0.08 },
+          2.20,
         )
           .fromTo(
-            ".eb-reveal-row span",
-            { yPercent: 105 },
-            { yPercent: 0, duration: 0.5, ease: "power3.out", stagger: 0.08 },
-            2.20,
+            ".eb-boundary-text-top",
+            { y: "-22.5vh", yPercent: -50, opacity: 0 },
+            { y: 0, yPercent: -50, opacity: 1, duration: 0.24, ease: "power2.out" },
+            2.33,
           )
           .fromTo(
-            ".eb-desc",
-            { y: 20, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
-            2.32,
+            ".eb-boundary-text-bottom",
+            { y: "22.5vh", yPercent: -50, opacity: 0 },
+            { y: 0, yPercent: -50, opacity: 1, duration: 0.24, ease: "power2.out" },
+            2.33,
           );
 
         // Scroll Text Color Fill-in Overlay (staggered reveal for the 4 lines, from 2.32 to 3.00)
@@ -536,9 +565,14 @@ export default function Home() {
           2.92,
         )
           .to(
-            ".eb-label, .eb-desc",
-            { y: -30, opacity: 0, duration: 0.20, ease: "power2.in" },
-            2.92,
+            ".eb-boundary-text-top",
+            { y: "-22.5vh", yPercent: -50, opacity: 0, duration: 0.24, ease: "power2.in" },
+            2.94,
+          )
+          .to(
+            ".eb-boundary-text-bottom",
+            { y: "22.5vh", yPercent: -50, opacity: 0, duration: 0.24, ease: "power2.in" },
+            2.94,
           )
           .to(
             ".eb-top-band",
@@ -563,7 +597,9 @@ export default function Home() {
           .set(".video-section-el", { display: "none" }, 3.18)
           .set(".eb-top-band", { yPercent: -100 }, 3.18)
           .set(".eb-bottom-band", { yPercent: 100 }, 3.18)
-          .set(".eb-center-band", { clipPath: "inset(50% 0% 50% 0%)" }, 3.18);
+          .set(".eb-center-band", { clipPath: "inset(50% 0% 50% 0%)" }, 3.18)
+          .set(".eb-boundary-text-top", { opacity: 0, yPercent: -50, y: "-22.5vh" }, 3.18)
+          .set(".eb-boundary-text-bottom", { opacity: 0, yPercent: -50, y: "22.5vh" }, 3.18);
 
         // ════════════════════════════════════════════════════════════════
         // PHASE 3: GALLERY (3.20 → 4.25) — dark red bg, white nav
@@ -574,6 +610,11 @@ export default function Home() {
           .to(
             ".gallery-section-el",
             { opacity: 1, duration: 0.2, ease: "power2.out" },
+            3.20,
+          )
+          .to(
+            ".gallery-bg-container",
+            { scale: 1.0, rotation: 0, duration: 0.45, ease: "power2.out" },
             3.20,
           )
           .to(
@@ -619,15 +660,17 @@ export default function Home() {
             3.20,
           );
 
-        // Gallery supported cards fan out from center
+        // Gallery supported cards fan out from center with scale, rotation, and spring/back ease
         tl.to(
           ".gallery-supported-card.corner-tl",
           {
             opacity: 1,
             x: 0,
             y: 0,
-            duration: 0.18,
-            ease: "power2.out",
+            scale: 1,
+            rotation: 0,
+            duration: 0.35,
+            ease: "back.out(1.2)",
             stagger: 0.04,
           },
           3.30,
@@ -638,8 +681,10 @@ export default function Home() {
               opacity: 1,
               x: 0,
               y: 0,
-              duration: 0.18,
-              ease: "power2.out",
+              scale: 1,
+              rotation: 0,
+              duration: 0.35,
+              ease: "back.out(1.2)",
               stagger: 0.04,
             },
             3.34,
@@ -650,8 +695,10 @@ export default function Home() {
               opacity: 1,
               x: 0,
               y: 0,
-              duration: 0.18,
-              ease: "power2.out",
+              scale: 1,
+              rotation: 0,
+              duration: 0.35,
+              ease: "back.out(1.2)",
               stagger: 0.04,
             },
             3.38,
@@ -662,50 +709,53 @@ export default function Home() {
               opacity: 1,
               x: 0,
               y: 0,
-              duration: 0.18,
-              ease: "power2.out",
+              scale: 1,
+              rotation: 0,
+              duration: 0.35,
+              ease: "back.out(1.2)",
               stagger: 0.04,
             },
             3.42,
           );
 
-        // Stack cards reveal one by one
+        // Stack cards reveal one by one with distinct fanned angles and offsets
         tl.to(
           ".stack-card-0",
-          { opacity: 1, duration: 0.12, ease: "power2.out" },
+          { opacity: 1, scale: 1, rotation: -8, x: -20, y: -15, duration: 0.28, ease: "power2.out" },
           3.48,
         )
           .to(
             ".stack-card-1",
-            { opacity: 1, duration: 0.12, ease: "power2.out" },
+            { opacity: 1, scale: 1, rotation: 6, x: 15, y: -10, duration: 0.28, ease: "power2.out" },
             3.56,
           )
           .to(
             ".stack-card-2",
-            { opacity: 1, duration: 0.12, ease: "power2.out" },
+            { opacity: 1, scale: 1, rotation: -4, x: -10, y: 8, duration: 0.28, ease: "power2.out" },
             3.64,
           )
           .to(
             ".stack-card-3",
-            { opacity: 1, duration: 0.12, ease: "power2.out" },
+            { opacity: 1, scale: 1, rotation: 4, x: 12, y: 10, duration: 0.28, ease: "power2.out" },
             3.72,
           )
           .to(
             ".stack-card-4",
-            { opacity: 1, duration: 0.12, ease: "power2.out" },
+            { opacity: 1, scale: 1, rotation: -1, x: 0, y: 0, duration: 0.28, ease: "power2.out" },
             3.80,
           );
 
-        // Gallery cards fly out at 90% (scroll ~4.15)
+        // Gallery cards fly out at 90% (scroll ~4.15) with scale and rotation scatter
         tl.to(
           ".gallery-supported-card.corner-tl",
           {
             opacity: 0,
-            x: -120,
-            y: -80,
-            duration: 0.14,
+            x: -180,
+            y: -140,
+            scale: 0.7,
+            rotation: -25,
+            duration: 0.22,
             ease: "power2.in",
-            stagger: 0.02,
           },
           4.10,
         )
@@ -713,11 +763,12 @@ export default function Home() {
             ".gallery-supported-card.corner-bl",
             {
               opacity: 0,
-              x: -120,
-              y: 80,
-              duration: 0.14,
+              x: -180,
+              y: 140,
+              scale: 0.7,
+              rotation: 25,
+              duration: 0.22,
               ease: "power2.in",
-              stagger: 0.02,
             },
             4.10,
           )
@@ -725,11 +776,12 @@ export default function Home() {
             ".gallery-supported-card.corner-tr",
             {
               opacity: 0,
-              x: 120,
-              y: -80,
-              duration: 0.14,
+              x: 180,
+              y: -140,
+              scale: 0.7,
+              rotation: 25,
+              duration: 0.22,
               ease: "power2.in",
-              stagger: 0.02,
             },
             4.10,
           )
@@ -737,18 +789,46 @@ export default function Home() {
             ".gallery-supported-card.corner-br",
             {
               opacity: 0,
-              x: 120,
-              y: 80,
-              duration: 0.14,
+              x: 180,
+              y: 140,
+              scale: 0.7,
+              rotation: -25,
+              duration: 0.22,
               ease: "power2.in",
-              stagger: 0.02,
             },
             4.10,
           )
           .to(
-            ".stack-card-0, .stack-card-1, .stack-card-2, .stack-card-3, .stack-card-4",
-            { opacity: 0, y: -60, duration: 0.14, ease: "power2.in" },
-            4.12,
+            ".gallery-bg-container",
+            { scale: 1.08, rotation: 1.5, duration: 0.25, ease: "power2.inOut" },
+            4.10,
+          );
+
+        // Staggered scatter/fly-out of central stack cards in distinct directions
+        tl.to(
+          ".stack-card-0",
+          { opacity: 0, x: -100, y: -160, rotation: -24, scale: 0.85, duration: 0.20, ease: "power2.in" },
+          4.12,
+        )
+          .to(
+            ".stack-card-1",
+            { opacity: 0, x: 100, y: -140, rotation: 24, scale: 0.85, duration: 0.20, ease: "power2.in" },
+            4.13,
+          )
+          .to(
+            ".stack-card-2",
+            { opacity: 0, x: -110, y: 120, rotation: -18, scale: 0.85, duration: 0.20, ease: "power2.in" },
+            4.14,
+          )
+          .to(
+            ".stack-card-3",
+            { opacity: 0, x: 110, y: 130, rotation: 18, scale: 0.85, duration: 0.20, ease: "power2.in" },
+            4.15,
+          )
+          .to(
+            ".stack-card-4",
+            { opacity: 0, x: 0, y: -180, rotation: -8, scale: 0.85, duration: 0.20, ease: "power2.in" },
+            4.16,
           );
 
         // ════════════════════════════════════════════════════════════════
@@ -858,11 +938,14 @@ export default function Home() {
           5.20,
         );
       }, containerRef);
-
-      return () => ctx.revert();
     };
 
     initGsap();
+
+    return () => {
+      active = false;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return (

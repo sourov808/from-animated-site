@@ -25,17 +25,21 @@
 
 ## What We Did (Latest Session)
 
-1. **Editorial Break Height Reduction**:
+1. **Editorial Break Height Reduction & Typography Refinement**:
    - Refactored `components/EditorialBreakSection.tsx` from a full-height `h-screen` overlay to a vertical band/strip (`h-[55vh]` at `top-[22.5vh]`).
-   - Adjusted typography and margins inside the component to scale correctly within the new horizontal layout box.
+   - Removed all bracketed labels and descriptions.
+   - Added massive bold boundary-spanning titles: "SILHOUETTE" (top boundary) and "PERSPECTIVE" (bottom boundary).
+   - Synchronized their animations so they physically slide *with* the top and bottom bands (starting at `-22.5vh`/`22.5vh` off-screen) and connect seamlessly with the center band right as the bands close/meet.
+   - Synchronized their exit animations so they slide out of view with the top/bottom bands.
 2. **Sliding Colored Background Bands & Inset Reveal**:
    - Implemented a horizontal letterbox reveal (`clipPath: "inset(50% 0% 50% 0%)"` to `inset(0% 0% 0% 0%)`) on `.eb-center-band`.
    - Included top green band (`#467235`, `22.5vh`) sliding down from above (`yPercent: -100` to `0`) and bottom red band (`#BD4444`, `22.5vh`) sliding up from below (`yPercent: 100` to `0`).
-3. **Transition Easing and Durations Optimization**:
+3. **Transition Easing and Durations Optimization & Stacking Refinements**:
    - Removed the video section opacity animation completely, keeping the looping video fully visible under the transparent gaps until the colored bands slide in and cover it, eliminating the cream background bleed-through.
    - Converted the `.eb-center-band` entrance tween to an explicit GSAP `.fromTo()` starting from `{ clipPath: "inset(50% 0% 50% 0%)" }` to ensure it animates from a height of 0 on every scroll without any sudden popping or flashing.
    - Overlapped the colored bands' entrance: they slide in sequentially starting when the center band is 60% open. The top green band starts sliding down at `2.33` (duration `0.24s`), and the bottom red band starts sliding up at `2.49` (duration `0.24s`).
    - Retimed the exit sequence starting at `2.92` with a `0.24` duration collapse and slide-out.
+   - Resolved colored bands display issues by removing conflicting initial CSS `transform` rules from `app/globals.css`, defining background colors as inline style attributes (circumventing compile purging), and setting explicit layer stacking order (`z-20` for top/bottom bands, `z-10` for center band, and `z-30` for boundary texts).
 4. **Verified Build Integrity**:
    - Successfully compiled the Next.js application with zero TypeScript warnings or errors (exit code 0).
 

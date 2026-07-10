@@ -12,13 +12,32 @@ export default function EditorialBreakSection() {
     >
       {/* ─── COLORED BACKGROUND BANDS (sliding from outside) ─── */}
       {/* Top band: Green #467235 */}
-      <div className="eb-top-band absolute top-0 left-0 w-full h-[22.5vh] bg-[#467235]" />
+      <div 
+        className="eb-top-band absolute top-0 left-0 w-full h-[22.5vh] z-20 overflow-hidden" 
+        style={{ backgroundColor: "#467235" }}
+      />
 
       {/* Bottom band: Red #BD4444 */}
-      <div className="eb-bottom-band absolute bottom-0 left-0 w-full h-[22.5vh] bg-[#BD4444]" />
+      <div 
+        className="eb-bottom-band absolute bottom-0 left-0 w-full h-[22.5vh] z-20 overflow-hidden" 
+        style={{ backgroundColor: "#BD4444" }}
+      />
+
+      {/* ─── BIG BOLD OVERLAPPING BOUNDARY TEXTS ─── */}
+      <div className="eb-boundary-text-top absolute top-[22.5vh] left-0 w-full z-30 flex justify-center pointer-events-none select-none overflow-visible">
+        <span className="font-anton uppercase text-[clamp(32px,11vw,160px)] leading-none text-[#FAF7F2] tracking-[0.02em] text-center px-4">
+          SILHOUETTE
+        </span>
+      </div>
+
+      <div className="eb-boundary-text-bottom absolute top-[77.5vh] left-0 w-full z-30 flex justify-center pointer-events-none select-none overflow-visible">
+        <span className="font-anton uppercase text-[clamp(32px,11vw,160px)] leading-none text-[#FAF7F2] tracking-[0.02em] text-center px-4">
+          PERSPECTIVE
+        </span>
+      </div>
 
       {/* ─── CENTER BAND (55vh, centered, Charcoal #121212) ─── */}
-      <div className="eb-center-band absolute left-0 right-0 top-[22.5vh] w-full h-[55vh] bg-[#121212] border-y border-white/[0.04] overflow-hidden">
+      <div className="eb-center-band absolute left-0 right-0 top-[22.5vh] w-full h-[55vh] bg-[#121212] border-y border-white/[0.04] z-10 overflow-hidden">
         {/* PREMIUM GRADIENT & NOISE BACKGROUND */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           {/* Soft radial vignette to shade the edges */}
@@ -54,13 +73,6 @@ export default function EditorialBreakSection() {
         <div className="absolute inset-0 w-full h-full z-5 flex flex-col justify-center pl-[10%] md:pl-[12%] pr-[8%] pointer-events-none">
           <div className="flex flex-col gap-1.5 max-w-4xl text-left">
             
-            {/* Small top label */}
-            <div className="overflow-hidden py-0.5">
-              <span className="eb-label block font-mono text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-[#D9C3B0] font-bold">
-                [ CHAPTER II / THE ESSENCE OF FORM ]
-              </span>
-            </div>
-
             {/* Line 1 */}
             <div className="eb-reveal-row relative overflow-hidden inline-block select-none py-0.5">
               <span 
@@ -119,13 +131,6 @@ export default function EditorialBreakSection() {
                   Before it fades into the dark.
                 </span>
               </div>
-            </div>
-
-            {/* Small bottom explanation */}
-            <div className="overflow-hidden mt-2 max-w-md py-0.5">
-              <p className="eb-desc block font-sans text-[11px] md:text-xs tracking-wide text-[#A39B92] leading-relaxed font-light">
-                A study of texture, posture, and organic geometry. Sculpted lines interacting with light to create timeless, momentary expressions.
-              </p>
             </div>
 
           </div>
