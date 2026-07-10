@@ -106,66 +106,29 @@ export default function Home() {
           )
           .set(".gallery-section-el", { display: "none", opacity: 0 }, 0.3)
           .set(".gallery-bg-container", { scale: 1.15, rotation: -2 }, 0.3)
+          // All supportive corner cards start fully BELOW the viewport — they
+          // rise up from the bottom together (with an animated, staggered
+          // overshoot) after the center deck finishes building.
           .set(
-            ".gallery-supported-card.corner-tl",
-            { x: -140, y: -100, scale: 0.8, rotation: -15, opacity: 0 },
+            ".gallery-supported-card",
+            { opacity: 0, scale: 0.9, x: 0, y: "75vh", rotation: 0 },
             0.3,
           )
-          .set(
-            ".gallery-supported-card.corner-bl",
-            { x: -140, y: 100, scale: 0.8, rotation: 15, opacity: 0 },
-            0.3,
-          )
-          .set(
-            ".gallery-supported-card.corner-tr",
-            { x: 140, y: -100, scale: 0.8, rotation: 15, opacity: 0 },
-            0.3,
-          )
-          .set(
-            ".gallery-supported-card.corner-br",
-            { x: 140, y: 100, scale: 0.8, rotation: -15, opacity: 0 },
-            0.3,
-          )
-          .set(
-            ".stack-card-0",
-            { scale: 0.85, rotation: -12, x: -30, y: -20, opacity: 0 },
-            0.3,
-          )
-          .set(
-            ".stack-card-1",
-            { scale: 0.85, rotation: 8, x: 25, y: -15, opacity: 0 },
-            0.3,
-          )
-          .set(
-            ".stack-card-2",
-            { scale: 0.85, rotation: -6, x: -15, y: 10, opacity: 0 },
-            0.3,
-          )
-          .set(
-            ".stack-card-3",
-            { scale: 0.85, rotation: 6, x: 20, y: 15, opacity: 0 },
-            0.3,
-          )
-          .set(
-            ".stack-card-4",
-            { scale: 0.85, rotation: -2, x: 0, y: 0, opacity: 0 },
-            0.3,
-          )
+          // Each of the 5 center deck cards starts fully OFF-SCREEN from a
+          // DIFFERENT direction — they fly in one-by-one to build a fanned
+          // deck. (0: bottom, 1: left, 2: right, 3: top, 4: bottom-right)
+          .set(".stack-card-0", { opacity: 0, scale: 0.9, x: 0, y: "100vh", rotation: -14 }, 0.3)
+          .set(".stack-card-1", { opacity: 0, scale: 0.9, x: "-100vw", y: 0, rotation: 12 }, 0.3)
+          .set(".stack-card-2", { opacity: 0, scale: 0.9, x: "100vw", y: 0, rotation: -12 }, 0.3)
+          .set(".stack-card-3", { opacity: 0, scale: 0.9, x: 0, y: "-100vh", rotation: 10 }, 0.3)
+          .set(".stack-card-4", { opacity: 0, scale: 0.9, x: "80vw", y: "80vh", rotation: -8 }, 0.3)
           .set(".text-section-el", { display: "none", opacity: 0 }, 0.3)
           .set(".intro-unfold-bar", { scaleY: 0 }, 0.3)
-          .set(".intro-axis-h, .intro-axis-v", { scale: 0 }, 0.3)
-          .set(".intro-circular-ring", { scale: 0 }, 0.3)
-          .set(
-            ".intro-portrait-container",
-            { clipPath: "circle(0% at 50% 50%)" },
-            0.3,
-          )
-          .set(".intro-portrait-img", { scale: 1.5 }, 0.3)
-          .set(".intro-block-tl", { x: "35vw", y: "25vh", opacity: 0 }, 0.3)
-          .set(".intro-block-tr", { x: "-35vw", y: "25vh", opacity: 0 }, 0.3)
-          .set(".intro-block-bl", { x: "35vw", y: "-25vh", opacity: 0 }, 0.3)
-          .set(".intro-block-br", { x: "-35vw", y: "-25vh", opacity: 0 }, 0.3)
-          .set(".intro-title-el", { yPercent: 100, skewY: 10 }, 0.3)
+          .set(".reveal-line", { yPercent: 110 }, 0.3)
+          .set(".hero-rule", { scaleX: 0 }, 0.3)
+          .set(".hero-meta-item", { y: 24, opacity: 0 }, 0.3)
+          .set(".brand-wordmark", { yPercent: 65, opacity: 0 }, 0.3)
+          .set(".brand-media", { scale: 1.25, opacity: 0 }, 0.3)
           .set(".header-logo", { opacity: 0 }, 0.3)
 
           // Initial state of old HeroSection
@@ -486,6 +449,13 @@ export default function Home() {
             2.14,
           );
 
+        // Hide the entire navbar during the editorial break section
+        tl.to(
+          ".header-shell",
+          { opacity: 0, duration: 0.12, ease: "power2.out" },
+          2.04,
+        );
+
         // ════════════════════════════════════════════════════════════════
         // PHASE 2: EDITORIAL BREAK (2.14 → 3.18) — sliding colored bands
         // ════════════════════════════════════════════════════════════════
@@ -605,13 +575,12 @@ export default function Home() {
         // PHASE 3: GALLERY (3.20 → 4.25) — dark red bg, white nav
         // ════════════════════════════════════════════════════════════════
 
-        // Gallery slides up and overlay fades in
-        tl.set(".gallery-section-el", { display: "block" }, 3.16)
-          .to(
-            ".gallery-section-el",
-            { opacity: 1, duration: 0.2, ease: "power2.out" },
-            3.20,
-          )
+        // Reveal Gallery BEHIND the editorial break BEFORE the center band
+        // closes. Gallery (z-35) sits under the break (z-36), so once it is
+        // displayed + opaque the closing letterbox uncovers the Gallery
+        // instead of the Video section (z-31) underneath.
+        tl.set(".gallery-section-el", { display: "block", opacity: 1 }, 2.90)
+          .set(".video-section-el", { display: "none" }, 2.90)
           .to(
             ".gallery-bg-container",
             { scale: 1.0, rotation: 0, duration: 0.45, ease: "power2.out" },
@@ -658,153 +627,85 @@ export default function Home() {
               ease: "power2.inOut",
             },
             3.20,
+          )
+          // Bring the navbar back for the gallery section
+          .to(
+            ".header-shell",
+            { opacity: 1, duration: 0.14, ease: "power2.out" },
+            3.20,
           );
 
-        // Gallery supported cards fan out from center with scale, rotation, and spring/back ease
+        // ── CENTER DECK: 5 big images rise up FROM OFF-SCREEN one-by-one,
+        // stacking on top. Each travels from below the viewport, scales to
+        // full, and lands at a fanned angle/offset so the deck stays legible.
         tl.to(
-          ".gallery-supported-card.corner-tl",
+          ".stack-card-0",
+          { opacity: 1, y: -16, scale: 1, rotation: -9, x: -22, duration: 0.3, ease: "power3.out" },
+          3.24,
+        )
+          .to(
+            ".stack-card-1",
+            { opacity: 1, y: -12, scale: 1, rotation: 6, x: 16, duration: 0.3, ease: "power3.out" },
+            3.33,
+          )
+          .to(
+            ".stack-card-2",
+            { opacity: 1, y: 8, scale: 1, rotation: -5, x: -12, duration: 0.3, ease: "power3.out" },
+            3.42,
+          )
+          .to(
+            ".stack-card-3",
+            { opacity: 1, y: 12, scale: 1, rotation: 5, x: 14, duration: 0.3, ease: "power3.out" },
+            3.51,
+          )
+          .to(
+            ".stack-card-4",
+            { opacity: 1, y: 0, scale: 1, rotation: -2, x: 0, duration: 0.3, ease: "power3.out" },
+            3.60,
+          );
+
+        // ── SUPPORTIVE: after the deck lands, all corner images rise up
+        // FROM THE BOTTOM at once. No stagger + a smooth (non-overshoot) ease
+        // keeps it glitch-free under scrub and finishes well before exit ──
+        tl.to(
+          ".gallery-supported-card",
           {
             opacity: 1,
             x: 0,
             y: 0,
             scale: 1,
-            rotation: 0,
-            duration: 0.35,
-            ease: "back.out(1.2)",
-            stagger: 0.04,
+            duration: 0.32,
+            ease: "power3.out",
           },
-          3.30,
-        )
-          .to(
-            ".gallery-supported-card.corner-bl",
-            {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              scale: 1,
-              rotation: 0,
-              duration: 0.35,
-              ease: "back.out(1.2)",
-              stagger: 0.04,
-            },
-            3.34,
-          )
-          .to(
-            ".gallery-supported-card.corner-tr",
-            {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              scale: 1,
-              rotation: 0,
-              duration: 0.35,
-              ease: "back.out(1.2)",
-              stagger: 0.04,
-            },
-            3.38,
-          )
-          .to(
-            ".gallery-supported-card.corner-br",
-            {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              scale: 1,
-              rotation: 0,
-              duration: 0.35,
-              ease: "back.out(1.2)",
-              stagger: 0.04,
-            },
-            3.42,
-          );
+          3.64,
+        );
 
-        // Stack cards reveal one by one with distinct fanned angles and offsets
+        // Subtle parallax drift of the whole deck/grid while it holds
         tl.to(
-          ".stack-card-0",
-          { opacity: 1, scale: 1, rotation: -8, x: -20, y: -15, duration: 0.28, ease: "power2.out" },
-          3.48,
-        )
-          .to(
-            ".stack-card-1",
-            { opacity: 1, scale: 1, rotation: 6, x: 15, y: -10, duration: 0.28, ease: "power2.out" },
-            3.56,
-          )
-          .to(
-            ".stack-card-2",
-            { opacity: 1, scale: 1, rotation: -4, x: -10, y: 8, duration: 0.28, ease: "power2.out" },
-            3.64,
-          )
-          .to(
-            ".stack-card-3",
-            { opacity: 1, scale: 1, rotation: 4, x: 12, y: 10, duration: 0.28, ease: "power2.out" },
-            3.72,
-          )
-          .to(
-            ".stack-card-4",
-            { opacity: 1, scale: 1, rotation: -1, x: 0, y: 0, duration: 0.28, ease: "power2.out" },
-            3.80,
-          );
+          ".gallery-grid",
+          { yPercent: -3, duration: 0.3, ease: "none" },
+          3.98,
+        );
 
-        // Gallery cards fly out at 90% (scroll ~4.15) with scale and rotation scatter
+        // ── EXIT: supportive images drop back down OFF-SCREEN to the bottom
+        // first (staggered), then the deck scatters out ──
         tl.to(
-          ".gallery-supported-card.corner-tl",
+          ".gallery-supported-card",
           {
             opacity: 0,
-            x: -180,
-            y: -140,
-            scale: 0.7,
-            rotation: -25,
-            duration: 0.22,
+            y: "75vh",
+            scale: 0.85,
+            duration: 0.2,
             ease: "power2.in",
           },
+          4.02,
+        ).to(
+          ".gallery-bg-container",
+          { scale: 1.08, rotation: 1.5, duration: 0.25, ease: "power2.inOut" },
           4.10,
-        )
-          .to(
-            ".gallery-supported-card.corner-bl",
-            {
-              opacity: 0,
-              x: -180,
-              y: 140,
-              scale: 0.7,
-              rotation: 25,
-              duration: 0.22,
-              ease: "power2.in",
-            },
-            4.10,
-          )
-          .to(
-            ".gallery-supported-card.corner-tr",
-            {
-              opacity: 0,
-              x: 180,
-              y: -140,
-              scale: 0.7,
-              rotation: 25,
-              duration: 0.22,
-              ease: "power2.in",
-            },
-            4.10,
-          )
-          .to(
-            ".gallery-supported-card.corner-br",
-            {
-              opacity: 0,
-              x: 180,
-              y: 140,
-              scale: 0.7,
-              rotation: -25,
-              duration: 0.22,
-              ease: "power2.in",
-            },
-            4.10,
-          )
-          .to(
-            ".gallery-bg-container",
-            { scale: 1.08, rotation: 1.5, duration: 0.25, ease: "power2.inOut" },
-            4.10,
-          );
+        );
 
-        // Staggered scatter/fly-out of central stack cards in distinct directions
+        // Staggered scatter/fly-out of the 6 central deck cards
         tl.to(
           ".stack-card-0",
           { opacity: 0, x: -100, y: -160, rotation: -24, scale: 0.85, duration: 0.20, ease: "power2.in" },
@@ -827,7 +728,7 @@ export default function Home() {
           )
           .to(
             ".stack-card-4",
-            { opacity: 0, x: 0, y: -180, rotation: -8, scale: 0.85, duration: 0.20, ease: "power2.in" },
+            { opacity: 0, x: 0, y: -190, rotation: -8, scale: 0.85, duration: 0.20, ease: "power2.in" },
             4.16,
           );
 
@@ -847,7 +748,7 @@ export default function Home() {
           .set(".text-section-el", { display: "flex", opacity: 1 }, 4.25)
           .to(
             ".pinned-viewport",
-            { backgroundColor: "#874F41", duration: 0.15 },
+            { backgroundColor: "#0B0B0D", duration: 0.15 },
             4.25,
           );
 
@@ -858,84 +759,53 @@ export default function Home() {
           4.32,
         );
 
-        // Guidelines & circular ring reveal
+        // Giant brand wordmark + faded media rise/fade in behind the content
         tl.to(
-          ".intro-axis-h, .intro-axis-v",
-          { scale: 1, duration: 0.15, ease: "power2.out" },
-          4.35,
+          ".brand-media",
+          { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" },
+          4.34,
         ).to(
-          ".intro-circular-ring",
-          { scale: 1, duration: 0.2, ease: "back.out(1.5)" },
-          4.35,
+          ".brand-wordmark",
+          { yPercent: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
+          4.38,
         );
 
-        // Central circular portrait clipPath expands & image parallax zoom down
+        // Top hairline draws in
         tl.to(
-          ".intro-portrait-container",
+          ".hero-rule",
+          { scaleX: 1, duration: 0.24, ease: "power3.inOut", stagger: 0.08 },
+          4.40,
+        );
+
+        // Statement lines slide up (masked)
+        tl.to(
+          ".reveal-line",
+          { yPercent: 0, duration: 0.34, ease: "power4.out", stagger: 0.08 },
+          4.46,
+        );
+
+        // Info columns + meta row fade/rise in
+        tl.to(
+          ".hero-meta-item",
           {
-            clipPath: "circle(50% at 50% 50%)",
+            y: 0,
+            opacity: 1,
             duration: 0.3,
-            ease: "power3.inOut",
+            ease: "power2.out",
+            stagger: 0.05,
           },
-          4.40,
+          4.70,
+        );
+
+        // Slow parallax settle while it holds as the final resting frame
+        tl.to(
+          ".brand-media",
+          { scale: 1.08, duration: 0.6, ease: "none" },
+          4.85,
         ).to(
-          ".intro-portrait-img",
-          { scale: 1.0, duration: 0.3, ease: "power2.out" },
-          4.40,
-        );
-
-        // Snake-style reveal: 4 quadrant blocks slide out from behind portrait to their corners
-        tl.to(
-          ".intro-block-tl, .intro-block-tr, .intro-block-bl, .intro-block-br",
-          { x: 0, y: 0, opacity: 1, duration: 0.3, ease: "power3.out" },
-          4.45,
-        );
-
-        // Child lines slither/skew into position
-        tl.to(
-          ".intro-title-el",
-          {
-            yPercent: 0,
-            skewY: 0,
-            duration: 0.25,
-            ease: "power3.out",
-            stagger: 0.02,
-          },
-          4.55,
-        );
-
-        // Slow parallax drift during scroll progression
-        tl.to(
-          ".intro-block-tl",
-          { x: "-15px", y: "-15px", duration: 0.6, ease: "none" },
-          4.60,
-        )
-          .to(
-            ".intro-block-tr",
-            { x: "15px", y: "-15px", duration: 0.6, ease: "none" },
-            4.60,
-          )
-          .to(
-            ".intro-block-bl",
-            { x: "-15px", y: "15px", duration: 0.6, ease: "none" },
-            4.60,
-          )
-          .to(
-            ".intro-block-br",
-            { x: "15px", y: "15px", duration: 0.6, ease: "none" },
-            4.60,
-          )
-          .to(
-            ".intro-portrait-img",
-            { scale: 1.15, duration: 0.6, ease: "none" },
-            4.60,
-          );
-
-        // OUTRO — fade text section out
-        tl.to(
-          ".text-section-el",
-          { opacity: 0, duration: 0.16, ease: "power2.inOut" },
-          5.20,
+          ".hero-content",
+          { y: "-2vh", duration: 0.6, ease: "none" },
+          4.85,
         );
       }, containerRef);
     };
@@ -953,7 +823,7 @@ export default function Home() {
       {/* Pinned viewport containing both sections */}
       <div className="pinned-viewport fixed inset-0 w-full h-screen bg-[#FAF7F2] overflow-hidden pointer-events-none select-none z-10">
         {/* Navbar Header (clickable) */}
-        <div className="pointer-events-auto relative z-50">
+        <div className="header-shell pointer-events-auto relative z-50">
           <Header />
         </div>
 

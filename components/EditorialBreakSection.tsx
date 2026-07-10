@@ -12,16 +12,34 @@ export default function EditorialBreakSection() {
     >
       {/* ─── COLORED BACKGROUND BANDS (sliding from outside) ─── */}
       {/* Top band: Green #467235 */}
-      <div 
-        className="eb-top-band absolute top-0 left-0 w-full h-[22.5vh] z-20 overflow-hidden" 
+      <div
+        className="eb-top-band absolute top-0 left-0 w-full h-[22.5vh] z-20 overflow-hidden"
         style={{ backgroundColor: "#467235" }}
-      />
+      >
+        <div className="absolute inset-0 flex items-center justify-between px-[6%] md:px-[8%] pointer-events-none select-none">
+          <span className="font-anton uppercase text-[clamp(10px,1.05vw,16px)] tracking-[0.4em] text-[#FAF7F2]/85">
+            The Collection
+          </span>
+          <span className="font-anton uppercase text-[clamp(10px,1.05vw,16px)] tracking-[0.4em] text-[#FAF7F2]/85">
+            Autumn — Winter 2026
+          </span>
+        </div>
+      </div>
 
       {/* Bottom band: Red #BD4444 */}
-      <div 
-        className="eb-bottom-band absolute bottom-0 left-0 w-full h-[22.5vh] z-20 overflow-hidden" 
+      <div
+        className="eb-bottom-band absolute bottom-0 left-0 w-full h-[22.5vh] z-20 overflow-hidden"
         style={{ backgroundColor: "#BD4444" }}
-      />
+      >
+        <div className="absolute inset-0 flex items-center justify-between px-[6%] md:px-[8%] pointer-events-none select-none">
+          <span className="font-anton uppercase text-[clamp(10px,1.05vw,16px)] tracking-[0.4em] text-[#FAF7F2]/90">
+            Photography — Jack
+          </span>
+          <span className="font-anton uppercase text-[clamp(10px,1.05vw,16px)] tracking-[0.4em] text-[#FAF7F2]/90">
+            FROM Studio · Paris
+          </span>
+        </div>
+      </div>
 
       {/* ─── BIG BOLD OVERLAPPING BOUNDARY TEXTS ─── */}
       <div className="eb-boundary-text-top absolute top-[22.5vh] left-0 w-full z-30 flex justify-center pointer-events-none select-none overflow-visible">
@@ -72,7 +90,7 @@ export default function EditorialBreakSection() {
         {/* EDITORIAL NARRATIVE LAYOUT (Z-INDEX 5) */}
         <div className="absolute inset-0 w-full h-full z-5 flex flex-col justify-center pl-[10%] md:pl-[12%] pr-[8%] pointer-events-none">
           <div className="flex flex-col gap-1.5 max-w-4xl text-left">
-            
+
             {/* Line 1 */}
             <div className="eb-reveal-row relative overflow-hidden inline-block select-none py-0.5">
               <span 

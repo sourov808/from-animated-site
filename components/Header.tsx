@@ -15,16 +15,8 @@ export default function Header() {
           <div>
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#menu" className="nav-el relative group font-anton text-sm uppercase tracking-[0.15em] text-[#0A0A0A] hover:opacity-75 transition-opacity py-1">
-                <span>MENU +</span>
-                <span className="nav-underline absolute bottom-0 left-0 w-full h-[1.5px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-              </a>
-              <a href="#shop" className="nav-el relative group font-anton text-sm uppercase tracking-[0.15em] text-[#0A0A0A] hover:opacity-75 transition-opacity py-1">
-                <span>SHOP ALL</span>
-                <span className="nav-underline absolute bottom-0 left-0 w-full h-[1.5px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-              </a>
-              <a href="#categories" className="nav-el relative group font-anton text-sm uppercase tracking-[0.15em] text-[#0A0A0A] hover:opacity-75 transition-opacity py-1">
-                <span>CATEGORIES +</span>
+              <a href="#gallery" className="nav-el relative group font-anton text-sm uppercase tracking-[0.15em] text-[#0A0A0A] hover:opacity-75 transition-opacity py-1">
+                <span>GALLERY</span>
                 <span className="nav-underline absolute bottom-0 left-0 w-full h-[1.5px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
               </a>
             </div>
@@ -46,10 +38,10 @@ export default function Header() {
             FROM
           </a>
 
-          {/* Right: Search button */}
-          <button className="nav-el font-anton text-xs md:text-sm uppercase tracking-[0.15em] text-[#0A0A0A] hover:opacity-60 transition-opacity pt-1 z-50 relative">
-            SEARCH
-          </button>
+          {/* Right: Contact link */}
+          <a href="mailto:hello@from.studio" className="nav-el font-anton text-xs md:text-sm uppercase tracking-[0.15em] text-[#0A0A0A] hover:opacity-60 transition-opacity pt-1 z-50 relative">
+            CONTACT
+          </a>
         </div>
       </header>
 
@@ -62,25 +54,18 @@ export default function Header() {
         <div className="absolute inset-0 grain-overlay opacity-5 pointer-events-none" />
         <nav className="flex flex-col space-y-8 text-center font-anton text-3xl tracking-widest uppercase">
           <a
-            href="#menu"
+            href="#gallery"
             onClick={() => setMobileMenuOpen(false)}
             className="hover:text-[#FF2E2E] transition-colors duration-300"
           >
-            MENU +
+            GALLERY
           </a>
           <a
-            href="#shop"
+            href="mailto:hello@from.studio"
             onClick={() => setMobileMenuOpen(false)}
             className="hover:text-[#FF2E2E] transition-colors duration-300"
           >
-            SHOP ALL
-          </a>
-          <a
-            href="#categories"
-            onClick={() => setMobileMenuOpen(false)}
-            className="hover:text-[#FF2E2E] transition-colors duration-300"
-          >
-            CATEGORIES +
+            CONTACT
           </a>
         </nav>
       </div>

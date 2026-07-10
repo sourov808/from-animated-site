@@ -73,9 +73,12 @@ export default function Gallery() {
         className="gallery-bg-container absolute inset-0 w-full h-full z-0 pointer-events-auto will-change-transform origin-center"
       >
         {/* Dark Red gradient combo background */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#0C0000] via-[#1A0404] to-[#2E0808] z-0">
-          <div className="absolute inset-0 opacity-[0.25] mix-blend-color-dodge bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.15)_0%,transparent_70%)]" />
-          <div 
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#120202] via-[#240707] to-[#3A0C0C] z-0">
+          {/* Warm center spotlight — lifts the central deck off the background */}
+          <div className="absolute inset-0 opacity-[0.55] mix-blend-screen bg-[radial-gradient(ellipse_58%_62%_at_50%_46%,rgba(190,45,38,0.28)_0%,rgba(120,20,20,0.10)_38%,transparent_72%)]" />
+          {/* Edge vignette — darkens corners for depth and focus */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_45%,rgba(0,0,0,0.55)_100%)]" />
+          <div
             className="absolute inset-0 opacity-[0.035]"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
@@ -94,7 +97,7 @@ export default function Gallery() {
             return (
               <div
                 key={card.id}
-                className={`gallery-supported-card corner-${card.corner} absolute pointer-events-auto`}
+                className={`gallery-supported-card corner-${card.corner} group absolute pointer-events-auto cursor-pointer`}
                 style={{
                   left: card.left,
                   top: card.top,
@@ -105,15 +108,16 @@ export default function Gallery() {
                   zIndex: 5,
                 }}
               >
-                <div 
-                  className="w-full h-full relative overflow-hidden shadow-[0_8px_25px_rgba(0,0,0,0.45)] border border-red-950/20 bg-neutral-900 rounded-sm"
+                <div
+                  className="w-full h-full relative overflow-hidden rounded-sm border border-red-950/20 bg-neutral-900 shadow-[0_8px_25px_rgba(0,0,0,0.45)] transition-all duration-500 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.05] group-hover:border-red-500/40 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
                 >
                   <Image
                     src={card.src}
                     alt={card.alt}
                     fill
-                    className="object-cover pointer-events-none select-none grayscale-[20%] contrast-[1.1] brightness-[0.9]"
-                    sizes="(max-width: 768px) 115px, 150px"
+                    quality={88}
+                    className="object-cover pointer-events-none select-none grayscale-[15%] contrast-[1.05] brightness-[0.95] transition-[filter,transform] duration-500 ease-out group-hover:scale-[1.08] group-hover:grayscale-0 group-hover:brightness-100"
+                    sizes="(max-width: 768px) 140px, 200px"
                   />
                 </div>
               </div>
@@ -124,7 +128,7 @@ export default function Gallery() {
           {stackCards.map((card, idx) => (
             <div
               key={card.id}
-              className={`gallery-stack-card stack-card-${idx} absolute pointer-events-auto left-[calc(50%-145px)] top-[calc(50%-210px)] md:left-[calc(50%-170px)] md:top-[calc(50%-245px)]`}
+              className={`gallery-stack-card stack-card-${idx} group absolute pointer-events-auto cursor-pointer left-[calc(50%-145px)] top-[calc(50%-210px)] md:left-[calc(50%-170px)] md:top-[calc(50%-245px)]`}
               style={{
                 width: "clamp(290px, 24vw, 340px)",
                 height: "clamp(420px, 34vw, 490px)",
@@ -133,15 +137,16 @@ export default function Gallery() {
                 zIndex: 10 + idx, // Stacked chronologically
               }}
             >
-              <div 
-                className="w-full h-full relative overflow-hidden shadow-[0_20px_55px_rgba(0,0,0,0.65)] border border-red-950/30 bg-neutral-900 rounded-sm"
+              <div
+                className="w-full h-full relative overflow-hidden rounded-sm border border-red-950/30 bg-neutral-900 shadow-[0_20px_55px_rgba(0,0,0,0.65)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-[1.03] group-hover:border-red-500/40 group-hover:shadow-[0_35px_80px_rgba(0,0,0,0.7)]"
               >
                 <Image
                   src={card.src}
                   alt={card.alt}
                   fill
-                  className="object-cover pointer-events-none select-none contrast-[1.05] brightness-[0.95]"
-                  sizes="(max-width: 768px) 290px, 340px"
+                  quality={92}
+                  className="object-cover pointer-events-none select-none contrast-[1.05] brightness-[0.95] transition-[filter,transform] duration-500 ease-out group-hover:scale-[1.06] group-hover:brightness-105"
+                  sizes="(max-width: 768px) 300px, 360px"
                   priority={idx < 2}
                 />
               </div>
