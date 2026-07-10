@@ -1,17 +1,21 @@
 # FROM — Editorial Photographer Portfolio
 
+**Live demo → [from-animated-site.vercel.app](https://from-animated-site.vercel.app/)**
+
 A single-page, scroll-driven portfolio for the fictional fashion photographer **Jack / FROM Studio**. The whole site is one pinned viewport whose sections are choreographed by a single GSAP scroll timeline — as you scroll, sections slide, morph, and hand off to each other like a film cut.
+
+[![FROM — live preview](docs/preview.png)](https://from-animated-site.vercel.app/)
 
 ## Stack
 
-| | |
-|---|---|
-| Framework | [Next.js 16](https://nextjs.org) (App Router, Turbopack) |
-| UI | React 19 |
-| Styling | Tailwind CSS v4 |
-| Animation | [GSAP](https://gsap.com) + ScrollTrigger |
-| QA | Puppeteer (responsive screenshots) |
-| Package manager | pnpm |
+|                 |                                                          |
+| --------------- | -------------------------------------------------------- |
+| Framework       | [Next.js 16](https://nextjs.org) (App Router, Turbopack) |
+| UI              | React 19                                                 |
+| Styling         | Tailwind CSS v4                                          |
+| Animation       | [GSAP](https://gsap.com) + ScrollTrigger                 |
+| QA              | Puppeteer (responsive screenshots)                       |
+| Package manager | pnpm                                                     |
 
 ## Getting started
 
@@ -77,4 +81,8 @@ public/                 # images (jpg/png) + video1..3.mp4
 - This is a heavily desktop-choreographed experience; it also reflows and stays legible on mobile (verified at 390px and 1440px).
 - Animations honor `prefers-reduced-motion` where it matters (loader, scroll cue).
 
-> Photography placeholders are from Unsplash; this is a design/portfolio demo, not a real studio.
+## Credits
+
+All assets — images and videos — are from [Unsplash](https://unsplash.com/).
+
+> This is a design/portfolio demo, not a real studio.
