@@ -10,6 +10,8 @@ import ForegroundTypography from "@/components/ForegroundTypography";
 import TextSection from "@/components/TextSection";
 import VideoSection from "@/components/VideoSection";
 import EditorialBreakSection from "@/components/EditorialBreakSection";
+import ScrollCue from "@/components/ScrollCue";
+import Loader from "@/components/Loader";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -820,6 +822,9 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="relative w-full bg-[#FAF7F2]">
+      {/* Logo preloader */}
+      <Loader />
+
       {/* Pinned viewport containing both sections */}
       <div className="pinned-viewport fixed inset-0 w-full h-screen bg-[#FAF7F2] overflow-hidden pointer-events-none select-none z-10">
         {/* Navbar Header (clickable) */}
@@ -837,14 +842,9 @@ export default function Home() {
           <ModelImages />
           <ForegroundTypography />
 
-          {/* CTA Link */}
+          {/* Scroll cue (+ idle nudge) */}
           <div className="hero-cta absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-center">
-            <a
-              href="#collection"
-              className="font-anton text-xs md:text-sm uppercase tracking-[0.2em] text-black hover:opacity-75 transition-opacity"
-            >
-              [ SEE COLLECTION ]
-            </a>
+            <ScrollCue />
           </div>
         </main>
 
