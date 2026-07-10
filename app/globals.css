@@ -3,6 +3,11 @@
 :root {
   --background: #FAF7F2;
   --foreground: #0A0A0A;
+  --font-geist-sans: "Geist", sans-serif;
+  --font-geist-mono: "Geist Mono", monospace;
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-playfair: "Playfair Display", serif;
+  --font-anton: "Anton", sans-serif;
 }
 
 @theme inline {

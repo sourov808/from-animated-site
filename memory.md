@@ -12,34 +12,54 @@
   - Scrolled State Model (Light): `public/model2_light_transparent.png`
   - Scrolled State Model (Dark): `public/model2_dark_transparent.png`
   - Sequential Intermission Videos: `public/video1.mp4`, `public/video2.mp4`, `public/video3.mp4`
+  - Photographer Portrait: `public/photographer.png`
 - **Section Components** (all absolute-positioned overlays, motion driven by the master GSAP scroll timeline in `app/page.tsx`):
   - `components/VideoSection.tsx` — sequential circular video cards + technical camera overlay frame.
   - `components/EditorialBreakSection.tsx` — full-screen typographic word reveals (LIGHT / PRESENCE / …), static DOM shell, no internal animation.
-  - `components/TextSection.tsx` — editorial photography stickers (polaroid print, 35mm film strip, etc.) over a dark backdrop.
+  - `components/TextSection.tsx` — photographer intro section with grayscale portrait (`photographer.png`) and a rich 7-line responsive typography stack.
   - `components/Header.tsx`, `components/ListedSection.tsx`, `components/StatsSection.tsx`.
-- **Fonts**: `font-anton`, `font-cormorant`, `font-playfair` (editorial/fashion typography).
+- **Fonts**: `font-anton`, `font-cormorant`, `font-playfair` (editorial/fashion typography loaded via standard HTML link tags in `layout.tsx`).
 - **Dev Dependency**: `puppeteer` (^25.3.0) for automated scroll-state diagnostics.
 
 ---
 
 ## What We Did (Latest Session)
 
-1. **Multi-Video Sequential Morph & Zoom** (`components/VideoSection.tsx`):
-   - Three video card containers (`.video-card-0/1/2`) using `video1.mp4`, `video2.mp4`, `video3.mp4`, absolutely stacked and centered.
-   - Each card starts as a `clip-path: circle(15vw)` lens; the master GSAP timeline in `app/page.tsx` morphs each to fullscreen in sequence, layered by z-index, with a cinematic subtitle reveal per video.
-   - Technical camera-overlay frame (crosshairs + inset border) for a viewfinder aesthetic.
-2. **Editorial Break Typography** (`components/EditorialBreakSection.tsx`):
-   - Full-screen word reveals (LIGHT, PRESENCE, …) in `font-anton`, with `font-mono` kickers and `font-cormorant` italic descriptions.
-   - Pure static shell (`display:none; opacity:0`); all motion driven exclusively by the GSAP scroll timeline.
-3. **Photography Sticker Layer** (`components/TextSection.tsx`):
-   - Scattered editorial props — white polaroid print, vertical 35mm film strip with perforations — grayscale-treated, `font-playfair` italic captions, subtle parallax hooks.
-4. **Scroll-Track Coordinates Calibration**:
-   - Stretched the global scroll spacer container in `app/page.tsx` from `4300vh` to `6210vh` to afford a spacious, slow, luxurious scroll speed for the three morph animations.
-   - Calibrated the `scrollToProject` method coordinates in `components/ListedSection.tsx` to `[5.06, 5.28, 5.50, 5.72, 5.94]` over the new `6.21` timeline divisor so sidebar navigation clicks map correctly to the grid project slides.
-   - Shifted all project zoom/entrance triggers inside the master GSAP scroll timeline by `1.92` scroll units (commencing the project reveal animations at `4.95` instead of `3.03`).
-5. **Linter & Build Validation**:
-   - Successfully ran automated Puppeteer test checks at key scroll interval milestones (`transition_1_20` to `transition_5_05`).
-   - Verified that the circular elements overlap and morph precisely without layout distortion.
+1. **Connected Three-Part Hero/Intro Section**:
+   - Replaced the old split-hero components with a single unified `components/HeroNewSection.tsx` component containing three vertically stacked, connected horizontal bands spanning `100vh` total.
+   - **Part 1 (Intro/Top Bar)**: A light sage green (`#D6E3D8`) banner containing the branding logo (`FROM`), and menu navigation elements.
+   - **Part 2 (Footer/Info Block)**: A deep black/charcoal (`#0F1012`) container displaying a large editorial statement in neon chartreuse/electric lime (`#C2F842`) and a three-column metadata display (Address, Email, and Phone number) along with a sub-footer copyright row.
+   - **Part 3 (Banner)**: A dark high-contrast image banner (`#1A1110`) containing the model portrait with massive, centered white overlay typography (`FROM STUDIOS`).
+   - **Scroll Transitions**: Set up scroll scrubbing in `app/page.tsx` from `0` to `0.22` where Part 1 slides up (`yPercent: -100`), Part 2 slides down (`yPercent: 100`), and Part 3 translates up and expands to cover the entire screen (`height: 100vh`, `y: "-56vh"`). Then, from `0.22` to `0.42`, Part 3 zooms and fades out (`scale: 2.2`, `opacity: 0`) to seamlessly reveal the video intermission, while the global navbar header fades back in at `0.34`.
+2. **Photographer Intro Section (John K) Radial Quadrant & Snake-Style Reveal**:
+   - Refactored the introduction section to feature a centered circular portrait (`.intro-portrait-container`) with a custom `clipPath: "circle(0% at 50% 50%)"` that expands outwards to a perfect circle upon entry.
+   - Organized the typography into balanced, symmetric quadrants (top-left, top-right, bottom-left, bottom-right) orbiting the center card.
+   - Removed the EXIF metadata text nodes entirely and hid the center header logo (`.header-logo`) as the gallery section exits (`6.10`).
+   - Integrated a premium accordion **Bar Unfolding Transition** (`.intro-unfold-bar`) consisting of four colored columns that grow upwards from the bottom of the screen starting at `6.15` (exactly as the gallery cards are flying out/scroll is 90% complete), switching the underlying page visibility seamlessly while the screen is covered, and then folding back down to the bottom at `6.55` to reveal the intro content against the solid premium terracotta `#874F41` background of the pinned viewport (completely eliminating the `.intro-bg-panels` and any visual gaps/breaks).
+   - Programmed a **Snake-Style Reveal**: The four quadrant blocks start positioned directly behind the central circular portrait. When the portrait begins to expand (`6.55`), the blocks slide out to their respective corners, while the child lines (`.intro-title-el`) inside each block slither/skew into position with staggered delays.
+   - Added custom italic phrases in each quadrant with mixed bold and normal styles to create visual depth.
+   - Updated the GSAP timeline triggers to choreograph these blocks, lines, and guidelines while maintaining the slow parallax drift during scroll progression.
+2. **Editorial Break Section Badge Stickers & Running Straight Line Texts**:
+   - Refactored `components/EditorialBreakSection.tsx` to replace static typographic slides with an interactive designer collage layer.
+   - Drawn 6 custom vector badge shapes (scalloped circle, daisy flower, 16-point starburst, postage ticket stamp, octagon shield, cloud badge) and 1 center bordeaux red badge using pixel-perfect inline SVGs.
+   - Added a subtle designer background grid pattern (`60px` squares) and a technical camera/film metadata overlay (shutter, ISO, aperture, frame tags, and coordinate crosshairs) to fill any spatial emptiness.
+   - Placed 8 straight slanted line paths running diagonally, horizontally, and vertically behind the stickers.
+   - Designed large bold typographic variations (`text-[clamp(28px,3vw,48px)]` to `text-[clamp(34px,3.6vw,56px)]`) mixing sans-serif bold, serif italic lowercase, and mono styles inside `<textPath>` elements.
+   - Programmed GSAP scroll-scrubbing of the `<textPath>` `startOffset` attributes to make all 8 text lines run smoothly across the screen during scroll progression.
+   - Scheduled the stickers to pop-in one-by-one with an organic spring animation (`back.out` ease) as scroll advances, and programmed a dramatic outward dispersion exit (scattering in all directions) at the end of the break phase (`3.80`).
+3. **Offline Font Loading Optimization**:
+   - Shifted font compilation from Next.js's build-time `next/font/google` fetcher (which failed offline) to runtime loading via HTML preconnect/link CDN references in `app/layout.tsx`.
+   - Declared standard CSS font variables globally inside `:root` in `app/globals.css` to guarantee font-styling integrity.
+4. **Seamless Theme Background Transitions**:
+   - Added the `.pinned-viewport` class to the primary fixed screen wrapper.
+   - Choreographed dynamic background color shifts matching each active timeline phase:
+     - Transitions to `#0A0A0A` (dark) at `0.42` for Video.
+     - Transitions back to `#FAF7F2` (beige) at `2.3` for Editorial Break.
+     - Transitions to `#0F0202` (dark red) at `4.0` for Gallery.
+     - Transitions to `#874F41` (premium terracotta) at `6.55` in sync with the gallery backdrop fade-out.
+   - This ensures absolutely zero off-white flashes or gaps occur as layers fade or slide during transitions.
+4. **Linter & Build Validation**:
+   - Verified compilation and production build correctness (`npm run build` exits with code 0).
 
 ---
 
@@ -54,4 +74,4 @@
 ## Next Steps / Future Enhancements
 
 - Review responsiveness across diverse mobile devices and tablets.
-- Integrate click-based cursor interaction on the stickers for micro-reactive scale/tilt effects.
+- Verify scroll speeds and durations of other sections.

@@ -5,106 +5,128 @@ import React from "react";
 export default function TextSection() {
   return (
     <section
-      className="text-section-el absolute inset-0 w-full h-screen z-37 pointer-events-none flex flex-col justify-center items-center overflow-hidden bg-[#0A0A0A]"
+      className="text-section-el absolute inset-0 w-full h-screen z-37 pointer-events-none flex items-center justify-center overflow-hidden"
       style={{
         opacity: 0,
         willChange: "transform, opacity",
       }}
     >
-      {/* Editorial backdrop texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_70%)] z-0 pointer-events-none" />
-
-      {/* --- Photography Items & Stickers --- */}
-
-      {/* 1. Polaroid Exhibition Print (Left) */}
-      <div className="sticker-polaroid absolute left-[2%] md:left-[3%] top-[24%] w-[150px] md:w-[220px] bg-white p-2.5 pb-7 md:p-3 md:pb-8 shadow-[0_25px_60px_rgba(0,0,0,0.85)] rounded-sm z-10 pointer-events-auto border border-white/5 will-change-transform">
-        <div className="relative w-full aspect-[4/3] bg-neutral-900 overflow-hidden mb-2.5">
-          <img
-            src="/ivan-kazlouskij-h1-bqZGYSLQ-unsplash.jpg"
-            alt="Polaroid print"
-            className="w-full h-full object-cover grayscale brightness-95"
-          />
-        </div>
-        <span className="font-playfair italic text-[10px] md:text-xs text-neutral-800 text-center block tracking-wide select-none">
-          Frame #08 — Stillness
-        </span>
+      {/* 1. Bar Unfolding Transition Columns (Z-INDEX 50) */}
+      <div className="absolute inset-0 w-full h-screen z-50 pointer-events-none flex">
+        <div className="intro-unfold-bar w-1/4 h-full bg-[#1A1110] origin-bottom scale-y-0 will-change-transform" />
+        <div className="intro-unfold-bar w-1/4 h-full bg-[#4A201A] origin-bottom scale-y-0 will-change-transform" />
+        <div className="intro-unfold-bar w-1/4 h-full bg-[#D5B990] origin-bottom scale-y-0 will-change-transform" />
+        <div className="intro-unfold-bar w-1/4 h-full bg-[#874F41] origin-bottom scale-y-0 will-change-transform" />
       </div>
 
-      {/* 2. Vertical 35mm Film Strip (Right) */}
-      <div className="sticker-film-strip absolute right-[2%] md:right-[3%] top-[12%] w-[75px] md:w-[110px] bg-black/90 py-3 md:py-4 px-1.5 md:px-2 border-x border-dashed border-white/20 flex flex-col gap-2.5 md:gap-3.5 shadow-2xl z-5 select-none opacity-70 will-change-transform rounded-sm">
-        {/* Film perforation holes */}
-        <div className="absolute top-0 bottom-0 left-0.5 md:left-1 w-[2px] border-l-2 border-dotted border-white/30" />
-        <div className="absolute top-0 bottom-0 right-0.5 md:right-1 w-[2px] border-r-2 border-dotted border-white/30" />
-        
-        <div className="w-full aspect-square bg-neutral-950 overflow-hidden relative border border-white/10">
-          <img src="/maureen-de-wit--Lu6d3i13Dg-unsplash.jpg" alt="frame 1" className="w-full h-full object-cover grayscale contrast-125" />
-        </div>
-        <div className="w-full aspect-square bg-neutral-950 overflow-hidden relative border border-white/10">
-          <img src="/rashtravardhan-kataria-1XWxeqhptp8-unsplash.jpg" alt="frame 2" className="w-full h-full object-cover grayscale contrast-125" />
-        </div>
-        <div className="w-full aspect-square bg-neutral-950 overflow-hidden relative border border-white/10">
-          <img src="/rene-ranisch-L3cTvvdrCCk-unsplash.jpg" alt="frame 3" className="w-full h-full object-cover grayscale contrast-125" />
-        </div>
-        <span className="font-mono text-[7px] md:text-[8px] text-white/40 text-center tracking-[0.2em] uppercase">
-          PAN 400
-        </span>
-      </div>
+      {/* 3. Radial Accent Color Glows */}
+      <div className="absolute -top-[10%] -right-[5%] w-[45vw] h-[45vw] bg-[#D5B990] opacity-[0.09] blur-[130px] rounded-full pointer-events-none z-1" />
+      <div className="absolute -bottom-[15%] -left-[10%] w-[50vw] h-[50vw] bg-[#FF3E3E] opacity-[0.07] blur-[160px] rounded-full pointer-events-none z-1" />
 
-      {/* 3. Circular Studio Stamp Sticker (Bottom-Left) */}
-      <div className="sticker-stamp absolute left-[12%] md:left-[15%] bottom-[12%] w-[90px] md:w-[130px] h-[90px] md:h-[130px] rounded-full border border-dashed border-[#C5A880]/30 flex items-center justify-center rotate-[-12deg] z-5 pointer-events-none select-none opacity-50 will-change-transform">
-        <div className="w-[84%] h-[84%] rounded-full border border-[#C5A880]/20 flex flex-col items-center justify-center p-2 text-center text-[#C5A880]">
-          <span className="font-mono text-[6px] md:text-[8px] uppercase tracking-[0.18em] mb-0.5 md:mb-1">
-            VERIFIED PRINT
-          </span>
-          <div className="h-[1px] w-[50%] bg-[#C5A880]/25 my-0.5 md:my-1" />
-          <span className="font-playfair italic text-[8px] md:text-[10px] leading-tight">
-            Studio Archives
-          </span>
-          <span className="font-mono text-[6px] md:text-[7px] tracking-[0.1em] mt-0.5 md:mt-1 text-[#C5A880]/40">
-            © 2026
-          </span>
+      {/* 4. Axis & Circular guidelines */}
+      <div className="intro-axis-h absolute left-[8vw] right-[8vw] top-1/2 h-[1px] bg-white/10 -translate-y-1/2 z-2 pointer-events-none origin-center scale-x-0 will-change-transform" />
+      <div className="intro-axis-v absolute top-[10vh] bottom-[10vh] left-1/2 w-[1px] bg-white/10 -translate-x-1/2 z-2 pointer-events-none origin-center scale-y-0 will-change-transform" />
+      <div className="intro-circular-ring absolute left-1/2 top-1/2 w-[min(38vw,38vh)] h-[min(38vw,38vh)] min-w-[290px] min-h-[290px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 z-2 pointer-events-none origin-center scale-0 will-change-transform" />
+
+      {/* 5. Main Content Container */}
+      <div className="relative w-full max-w-[92vw] h-[85vh] z-10 select-none">
+        {/* Center: Circular Photographer Portrait */}
+        <div className="absolute left-1/2 top-1/2 w-[min(30vw,30vh)] h-[min(30vw,30vh)] min-w-[230px] min-h-[230px] -translate-x-1/2 -translate-y-1/2 z-20">
+          <div className="intro-portrait-container w-full h-full rounded-full overflow-hidden bg-neutral-900 shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-white/10 will-change-transform">
+            <img
+              src="/photographer.png"
+              alt="John K Portrait"
+              className="intro-portrait-img w-full h-full object-cover grayscale contrast-115 brightness-90 scale-125 origin-center will-change-transform"
+            />
+          </div>
         </div>
-      </div>
 
-      {/* --- Centered Typography composition --- */}
-      <div className="w-full max-w-[88vw] flex flex-col items-center justify-center relative z-10 select-none">
-        
-        {/* Section indicator */}
-        <span className="text-section-tag font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/40 mb-8 md:mb-12 block will-change-transform">
-          [ CHAPTER II • THE ARCHIVE ]
-        </span>
-
-        {/* Masked text rows for kinetic scroll reveal */}
-        <div className="w-full overflow-hidden flex flex-col gap-3 md:gap-5 items-center">
-          
-          {/* Row 1: Bold Anton, left side starting overflow */}
-          <div className="w-full overflow-hidden text-left pl-[2vw] md:pl-[6vw]">
-            <h2 className="text-row-1 font-anton text-[clamp(2rem,6.8vw,9.5rem)] uppercase leading-none tracking-tight text-white whitespace-nowrap will-change-transform">
-              EXPLORING THE ARCHIVE
+        {/* Quadrant 1: Top-Left (Greeting, Role & Italic Statement) */}
+        <div className="intro-block-tl absolute left-[3vw] top-[14vh] text-left max-w-[34vw] flex flex-col gap-2 z-10 will-change-transform">
+          <div className="overflow-hidden">
+            <h2 className="intro-title-el font-anton text-[clamp(1.5rem,3.2vw,4.5rem)] leading-none text-white uppercase tracking-tight will-change-transform">
+              HI, I'M JOHN K
             </h2>
           </div>
-
-          {/* Row 2: Playfair Italic, centered */}
-          <div className="w-full overflow-hidden text-center">
-            <h2 className="text-row-2 font-playfair italic text-[clamp(2rem,6.5vw,9rem)] leading-none tracking-wide text-[#FAF7F2]/45 whitespace-nowrap will-change-transform">
-              capturing silence, light & space
-            </h2>
+          <div className="overflow-hidden">
+            <h3 className="intro-title-el font-playfair italic text-[clamp(1.1rem,1.8vw,2.2rem)] leading-none text-[#C5A880] will-change-transform">
+              Editorial Imagemaker
+            </h3>
           </div>
-
-          {/* Row 3: Bold Anton, right side starting overflow */}
-          <div className="w-full overflow-hidden text-right pr-[2vw] md:pr-[6vw]">
-            <h2 className="text-row-3 font-anton text-[clamp(2rem,6.8vw,9.5rem)] uppercase leading-none tracking-tight text-white whitespace-nowrap will-change-transform">
-              A CURATED NARRATIVE
-            </h2>
+          <div className="overflow-hidden">
+            <p className="intro-title-el font-playfair italic text-[clamp(0.85rem,1.3vw,1.5rem)] text-white/70 leading-relaxed will-change-transform">
+              capturing the raw,{" "}
+              <strong className="font-bold text-[#C5A880]">
+                unfiltered soul
+              </strong>{" "}
+              of haute fashion
+            </p>
           </div>
-
         </div>
 
-        {/* Explanatory subtitle */}
-        <p className="text-section-desc font-playfair italic text-xs md:text-sm text-white/30 max-w-[340px] text-center mt-10 md:mt-14 leading-relaxed will-change-transform">
-          A physical and digital exhibition documenting visual stories across landscapes and portraits.
-        </p>
+        {/* Quadrant 2: Top-Right (Campaign Target & Italic Statement) */}
+        <div className="intro-block-tr absolute right-[3vw] top-[16vh] text-right max-w-[34vw] flex flex-col gap-2 z-10 will-change-transform">
+          <div className="overflow-hidden">
+            <h2 className="intro-title-el font-anton text-[clamp(1.3rem,2.6vw,3.6rem)] leading-none text-white uppercase tracking-tight will-change-transform">
+              SHAPING MODERN CAMPAIGNS
+            </h2>
+          </div>
+          <div className="overflow-hidden">
+            <p className="intro-title-el font-playfair italic text-[clamp(0.85rem,1.3vw,1.5rem)] text-white/70 leading-relaxed will-change-transform">
+              crafting{" "}
+              <strong className="font-bold text-[#C5A880]">
+                visual legacies
+              </strong>{" "}
+              that define contemporary culture
+            </p>
+          </div>
+        </div>
 
+        {/* Quadrant 3: Bottom-Left (Philosophy & Italic Statement) */}
+        <div className="intro-block-bl absolute left-[4vw] bottom-[14vh] text-left max-w-[34vw] flex flex-col gap-2 z-10 will-change-transform">
+          <div className="overflow-hidden">
+            <h2 className="intro-title-el font-anton text-[clamp(1.3rem,2.6vw,3.6rem)] leading-none text-white uppercase tracking-tight will-change-transform">
+              DOCUMENTING SILENT STORIES
+            </h2>
+          </div>
+          <div className="overflow-hidden pl-[2vw]">
+            <h3 className="intro-title-el font-playfair italic text-[clamp(1rem,1.5vw,1.8rem)] leading-none text-white/80 will-change-transform">
+              Of Light, Shadow & Contrast
+            </h3>
+          </div>
+          <div className="overflow-hidden pl-[2vw]">
+            <p className="intro-title-el font-playfair italic text-[clamp(0.85rem,1.3vw,1.5rem)] text-white/70 leading-relaxed will-change-transform">
+              where every frame becomes an{" "}
+              <strong className="font-bold text-[#C5A880]">
+                eternal whisper
+              </strong>{" "}
+              of truth
+            </p>
+          </div>
+        </div>
+
+        {/* Quadrant 4: Bottom-Right (Cities, Tenure & Italic Statement) */}
+        <div className="intro-block-br absolute right-[4vw] bottom-[16vh] text-right max-w-[34vw] flex flex-col gap-2.5 z-10 will-change-transform">
+          <div className="overflow-hidden">
+            <h3 className="intro-title-el font-playfair italic text-[clamp(1.1rem,1.8vw,2.2rem)] leading-none text-[#C5A880] will-change-transform">
+              Across Paris and Milan
+            </h3>
+          </div>
+          <div className="overflow-hidden">
+            <h3 className="intro-title-el font-playfair italic text-[clamp(0.85rem,1.3vw,1.5rem)] leading-none text-white/50 will-change-transform">
+              twelve years of visual depth
+            </h3>
+          </div>
+          <div className="overflow-hidden">
+            <p className="intro-title-el font-playfair italic text-[clamp(0.85rem,1.3vw,1.5rem)] text-white/70 leading-relaxed will-change-transform">
+              sculpting{" "}
+              <strong className="font-bold text-[#C5A880]">
+                dynamic dimensions
+              </strong>{" "}
+              through light and lens
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
