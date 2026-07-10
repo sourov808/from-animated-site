@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ModelImages() {
   return (
     <div className="absolute inset-0 z-12 pointer-events-none select-none">

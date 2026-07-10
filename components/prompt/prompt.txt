@@ -1,0 +1,185 @@
+========================================================================
+FROM — Editorial Photographer Portfolio
+Step-by-step build prompts (feed these to an AI coding agent, in order)
+========================================================================
+
+Context to give up front (paste once, keep it in the system/first message):
+
+  "We are building 'FROM', a single-page, scroll-driven portfolio for a
+   fictional fashion photographer (Jack / FROM Studio). The entire site is
+   ONE fixed full-screen 'pinned viewport'. A tall spacer element gives the
+   page scroll length, and a SINGLE scrubbed GSAP ScrollTrigger timeline
+   drives the whole choreography: sections are absolutely positioned inside
+   the viewport, hidden at init, then revealed/animated in sequence as you
+   scroll. Stack: Next.js 16 (App Router, Turbopack), React 19, Tailwind v4,
+   GSAP + ScrollTrigger. Package manager: pnpm. Fonts: Anton (display),
+   Playfair Display (serif), Geist. Every section shares class-name hooks
+   the timeline animates (.hero-*, .video-*, .eb-*, .gallery-*, etc.).
+   Never break existing GSAP hook classes when editing a section."
+
+------------------------------------------------------------------------
+STEP 0 — Scaffold
+------------------------------------------------------------------------
+"Create a Next.js 16 App Router project with TypeScript, Tailwind CSS v4,
+ and ESLint. Add GSAP. In app/layout.tsx load the Anton, Playfair Display,
+ and Geist fonts and expose them as CSS variables (--font-anton,
+ --font-playfair). In app/globals.css set a cream base theme (bg #FAF7F2,
+ fg #0A0A0A) and add a .text-stroke-white outline utility and a
+ .grain-overlay noise texture utility."
+
+------------------------------------------------------------------------
+STEP 1 — The pinned-viewport shell + master timeline
+------------------------------------------------------------------------
+"In app/page.tsx build the shell: a fixed inset-0 full-screen '.pinned-viewport'
+ (overflow-hidden, pointer-events-none) that will hold every section, plus a
+ separate scroll spacer div of height 7600vh.
+ Dynamically import gsap + ScrollTrigger inside a useEffect, register the
+ plugin, and create ONE gsap.timeline with scrollTrigger { trigger: container,
+ start 'top top', end 'bottom bottom', scrub: 1.5 }. Use a gsap.context for
+ cleanup. Add a big INIT block that .set()s every later section to hidden at
+ timeline position 0.3. We will add sections one at a time."
+
+------------------------------------------------------------------------
+STEP 2 — Hero
+------------------------------------------------------------------------
+"Create the Hero as layered components rendered inside the pinned viewport:
+ BackgroundSplit, BackgroundTypography, ModelImages, ForegroundTypography.
+ Give them class hooks: .hero-section-el, .hero-image-set-1/2,
+ .hero-model-container, .hero-bg-text-*, .hero-fg-text-*, .hero-text-bg/fg,
+ .hero-cta. In the timeline (Phase 0, positions 0 -> ~0.44): crossfade image
+ set 1->2 and the fg/bg text variants, then zoom the models + typography out
+ (scale up, fade), then fade the hero section out and hand off."
+
+------------------------------------------------------------------------
+STEP 3 — Header / nav
+------------------------------------------------------------------------
+"Create Header.tsx: a fixed top nav with hook classes .nav-el, .nav-underline,
+ .header-logo, .mobile-burger-line, and a mobile burger drawer. Layout:
+ GALLERY (left) · FROM (center logo) · CONTACT (right, mailto). The timeline
+ recolors these per section (dark on cream hero, white/cream on dark sections)
+ and toggles .header-logo opacity. Wrap it in page.tsx in a '.header-shell'
+ div so the whole nav can be faded out for one section later."
+
+------------------------------------------------------------------------
+STEP 4 — Video intermission
+------------------------------------------------------------------------
+"Create VideoSection.tsx (.video-section-el, black bg) with three video cards
+ (.video-card-0/1/2), a camera-overlay frame, and split left/right captions
+ (.video-text-left/right-N). In the timeline (Phase 1): slide the video section
+ up over the hero; reveal video 0 with a circular clip-path morph + captions;
+ swap to video 1; slide video 2 in horizontally pushing video 1 off. Turn nav
+ white during this phase."
+
+------------------------------------------------------------------------
+STEP 5 — Editorial Break
+------------------------------------------------------------------------
+"Create EditorialBreakSection.tsx (.editorial-break-el). Structure: a green
+ top band (.eb-top-band) and red bottom band (.eb-bottom-band) that slide in
+ from off-screen; a charcoal center band (.eb-center-band) revealed with a
+ letterbox clip-path; big centered boundary words SILHOUETTE (top) and
+ PERSPECTIVE (bottom); and a 4-line poem on the left where each line
+ (.eb-reveal-row) has a stroked outline + a width-based color fill overlay
+ (.eb-fill-line-1..4). Put small captions inside the top/bottom bands
+ ('The Collection / Autumn — Winter 2026', 'Photography — Jack / FROM Studio').
+ Timeline (Phase 2): open center band, slide bands in, stagger the poem rows
+ up, run the fill-line reveals, then reverse everything out. HIDE the whole
+ navbar during this section (fade .header-shell to 0, restore it for Gallery)."
+
+------------------------------------------------------------------------
+STEP 6 — Gallery
+------------------------------------------------------------------------
+"Create Gallery.tsx (.gallery-section-el, z-35). A dark-red stage: gradient +
+ warm center spotlight + edge vignette + noise. Two groups:
+ (a) FIVE large center 'deck' cards (.gallery-stack-card / .stack-card-0..4),
+ (b) supportive corner cards (.gallery-supported-card, corner-tl/tr/bl/br).
+ Cards use next/image (quality ~90, correct sizes) and a group-hover that
+ lifts the card + zooms the image to full color.
+ Timeline (Phase 3): reveal the gallery BEHIND the editorial break BEFORE its
+ letterbox closes (z-order: video 31 < gallery 35 < break 36) so the closing
+ band uncovers the gallery, not the video. Then fly the 5 deck cards in
+ one-by-one FROM DIFFERENT off-screen directions to build a fanned deck; after
+ they land, rise ALL supportive cards up from the bottom together (no stagger,
+ smooth ease — avoid overshoot so it doesn't glitch under scrub). Exit: fade
+ supportive down, scatter the deck."
+
+------------------------------------------------------------------------
+STEP 7 — Footer / TextSection (the resting frame)
+------------------------------------------------------------------------
+"Create TextSection.tsx (.text-section-el). Model it on an awwwards-style
+ footer composition on an ONYX canvas (#0B0B0D) with ivory text (#ECE7DE) and
+ an OXBLOOD accent (#A23A3A). Layout inside a '.hero-content' block that fills
+ the viewport height:
+   - dotted top rule (.hero-rule)
+   - LEFT: a big Anton statement in masked lines (.reveal-line), last line oxblood
+   - RIGHT rail (spread top-to-bottom): three info columns (.hero-meta-item:
+     Based in / Commissions=email / Telephone), a rotating circular 'available
+     for commissions · 2026' seal (SVG textPath, CSS spin), and a Selected
+     clients list + a big 'VIEW THE FULL ARCHIVE ↗' button
+   - dotted bottom rule + meta row: 'Jack — FROM Studio · © 2026 · socials ·
+     Paris {live time}'
+   - a giant faded 'FROM' wordmark (.brand-wordmark) with a masked photo
+     behind it (.brand-media)
+ Set the pinned-viewport background to onyx for this phase.
+ Timeline (Phase 4): draw the rules, mask the statement lines up, rise the
+ columns/seal/meta, float the wordmark + media in; let it REST as the final
+ frame (no fade-out)."
+
+------------------------------------------------------------------------
+STEP 8 — Archive overlay (VIEW THE FULL ARCHIVE)
+------------------------------------------------------------------------
+"Make the archive button open a full-screen overlay. Requirements:
+   - Render it with React createPortal to document.body (so it sits ABOVE the
+     nav — otherwise the header's stacking context paints over it).
+   - Fade + slide-up entrance; a left '← Back' button closes it (also Esc).
+   - Lock BOTH <html> and <body> overflow while open (the scroller is the root
+     spacer, so locking body alone won't stop the scrub timeline underneath).
+   - A responsive image grid (grid-cols-2 md:3) with hover zoom + caption,
+     and a small footer row."
+
+------------------------------------------------------------------------
+STEP 9 — Loader (preloader)
+------------------------------------------------------------------------
+"Create Loader.tsx: a full-screen cream preloader mounted at the top of the
+ page. Show the 'FROM' wordmark where the O is a spinning camera-aperture SVG
+ (oxblood center spark). The word is a faint outline base with an ink layer
+ clipped from the bottom up via clip-path tied to a 0->100% counter (add a CSS
+ transition on the clip-path so it glides, not steps). Bottom: 'Jack — FROM
+ Studio' + a big % counter + an oxblood progress line. Lock html/body scroll
+ while loading; when the counter hits 100, slide the whole panel up and unmount.
+ Respect prefers-reduced-motion."
+
+------------------------------------------------------------------------
+STEP 10 — Scroll cue + idle nudge (hero)
+------------------------------------------------------------------------
+"Create ScrollCue.tsx and place it in the hero's .hero-cta slot: a thin
+ vertical track with a dot animating downward + a 'SCROLL' label. Add an idle
+ detector: if the user stays near the top without scrolling for ~6s, fade in a
+ 'Keep exploring' line above the cue; reset on scroll. Respect reduced-motion."
+
+------------------------------------------------------------------------
+STEP 11 — Polish pass
+------------------------------------------------------------------------
+"Do a cleanup + QA pass without changing behavior:
+   - remove unused files, dead CSS, and unused imports;
+   - run `pnpm build` (must pass) and typecheck;
+   - screenshot mobile (390px) and desktop (1440px) at the hero, editorial,
+     gallery, and footer frames (drive the scrubbed timeline with
+     window.scrollTo at fractions of scrollHeight) and fix any overflow;
+   - write a clear README."
+
+========================================================================
+KEY GOTCHAS (tell the agent these — they caused real bugs while building)
+========================================================================
+- Timeline numbers (0.3, 2.14, 3.20 ...) are TIMELINE POSITIONS, not seconds.
+- Reveal a section BEHIND the current one before the current one's clip/exit
+  finishes, or the wrong layer shows through (z-order matters).
+- Under a scrubbed timeline, avoid back/elastic 'overshoot' eases and long
+  staggers on many elements — they read as glitches/hangs when scrubbing.
+- The scroller is the ROOT element (tall spacer). To lock scroll for an
+  overlay, set overflow:hidden on <html> AND <body>.
+- Any full-screen overlay must be portaled to <body> to escape section
+  stacking contexts and cover the fixed nav.
+- clip-path/width reveals need an explicit CSS transition or they step.
+- When editing a section, preserve its GSAP hook class names or the master
+  timeline animates nothing.
+========================================================================

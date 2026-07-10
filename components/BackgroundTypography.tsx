@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function BackgroundTypography() {
   return (
     <div className="hero-text-bg absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none select-none z-5">

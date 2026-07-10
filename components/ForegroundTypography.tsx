@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ForegroundTypography() {
   return (
     <div className="hero-text-fg absolute inset-x-0 bottom-[14vh] flex pointer-events-none select-none z-20 h-[22vw]">

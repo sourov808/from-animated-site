@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Gallery from "@/components/Gallery";
 import BackgroundSplit from "@/components/BackgroundSplit";
